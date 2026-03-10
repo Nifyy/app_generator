@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 
 class SavedIdeasScreen extends StatefulWidget {
   final List<String> savedIdeas;
-
   const SavedIdeasScreen({super.key, required this.savedIdeas});
 
   @override
@@ -28,16 +27,13 @@ class _SavedIdeasScreenState extends State<SavedIdeasScreen> {
   }
 
   List<String> get _filtered => _ideas
-      .where((idea) =>
-          idea.toLowerCase().contains(_searchQuery.toLowerCase()))
+      .where((idea) => idea.toLowerCase().contains(_searchQuery.toLowerCase()))
       .toList();
 
   void _removeIdea(int indexInFiltered) {
     final idea = _filtered[indexInFiltered];
     HapticFeedback.mediumImpact();
-    setState(() {
-      _ideas.remove(idea);
-    });
+    setState(() => _ideas.remove(idea));
   }
 
   void _copyIdea(String idea) {
@@ -45,13 +41,12 @@ class _SavedIdeasScreenState extends State<SavedIdeasScreen> {
     HapticFeedback.lightImpact();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text(
-          'Copied to clipboard',
-          style: TextStyle(fontSize: 14, color: Colors.white),
-        ),
-        backgroundColor: const Color(0xFF1C2420),
+        content: const Text('Copied to clipboard',
+            style: TextStyle(fontSize: 14, color: Colors.white)),
+        backgroundColor: const Color(0xFF1A1A1A),
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         margin: const EdgeInsets.all(16),
         duration: const Duration(seconds: 2),
       ),
@@ -63,33 +58,29 @@ class _SavedIdeasScreenState extends State<SavedIdeasScreen> {
     final filtered = _filtered;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0F1512),
+      backgroundColor: const Color(0xFF0A0A0A),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Header
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 16, 16, 0),
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
               child: Row(
                 children: [
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: Container(
-                      width: 40,
-                      height: 40,
+                      width: 42,
+                      height: 42,
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.06),
+                        color: const Color(0xFF111111),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: Colors.white.withOpacity(0.08),
-                          width: 1,
-                        ),
+                            color: Colors.white.withOpacity(0.08)),
                       ),
-                      child: Icon(
-                        Icons.arrow_back_ios_new_rounded,
-                        color: Colors.white.withOpacity(0.7),
-                        size: 16,
-                      ),
+                      child: Icon(Icons.arrow_back_ios_new_rounded,
+                          color: Colors.white.withOpacity(0.7), size: 16),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -97,23 +88,36 @@ class _SavedIdeasScreenState extends State<SavedIdeasScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'MY COLLECTION',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF4ADE80),
-                            letterSpacing: 2.5,
-                          ),
+                        Row(
+                          children: [
+                            Container(
+                              width: 3,
+                              height: 14,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFF59E0B),
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'COLLECTION',
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white.withOpacity(0.35),
+                                letterSpacing: 2.5,
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 2),
                         const Text(
                           'Saved Ideas',
                           style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w700,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w800,
                             color: Colors.white,
-                            letterSpacing: -0.3,
+                            letterSpacing: -0.5,
                           ),
                         ),
                       ],
@@ -122,23 +126,17 @@ class _SavedIdeasScreenState extends State<SavedIdeasScreen> {
                   if (_ideas.isNotEmpty)
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
+                          horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF4ADE80).withOpacity(0.12),
+                        color: const Color(0xFFF59E0B),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: const Color(0xFF4ADE80).withOpacity(0.25),
-                          width: 1,
-                        ),
                       ),
                       child: Text(
                         '${_ideas.length}',
                         style: const TextStyle(
-                          color: Color(0xFF4ADE80),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF0A0A0A),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
                     ),
@@ -152,51 +150,37 @@ class _SavedIdeasScreenState extends State<SavedIdeasScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
-                  height: 46,
+                  height: 48,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF161E1A),
+                    color: const Color(0xFF111111),
                     borderRadius: BorderRadius.circular(14),
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.07),
-                      width: 1,
-                    ),
+                    border: Border.all(color: Colors.white.withOpacity(0.07)),
                   ),
                   child: TextField(
                     controller: _searchController,
                     onChanged: (v) => setState(() => _searchQuery = v),
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.85),
-                      fontSize: 14,
-                    ),
+                        color: Colors.white.withOpacity(0.85), fontSize: 14),
                     decoration: InputDecoration(
                       hintText: 'Search your ideas...',
                       hintStyle: TextStyle(
-                        color: Colors.white.withOpacity(0.25),
-                        fontSize: 14,
-                      ),
-                      prefixIcon: Icon(
-                        Icons.search_rounded,
-                        color: Colors.white.withOpacity(0.3),
-                        size: 20,
-                      ),
+                          color: Colors.white.withOpacity(0.2), fontSize: 14),
+                      prefixIcon: Icon(Icons.search_rounded,
+                          color: Colors.white.withOpacity(0.25), size: 20),
                       suffixIcon: _searchQuery.isNotEmpty
                           ? GestureDetector(
                               onTap: () {
                                 _searchController.clear();
                                 setState(() => _searchQuery = '');
                               },
-                              child: Icon(
-                                Icons.close_rounded,
-                                color: Colors.white.withOpacity(0.3),
-                                size: 18,
-                              ),
+                              child: Icon(Icons.close_rounded,
+                                  color: Colors.white.withOpacity(0.25),
+                                  size: 18),
                             )
                           : null,
                       border: InputBorder.none,
                       contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
+                          horizontal: 16, vertical: 14),
                     ),
                   ),
                 ),
@@ -206,15 +190,14 @@ class _SavedIdeasScreenState extends State<SavedIdeasScreen> {
 
             Expanded(
               child: _ideas.isEmpty
-                  ? _EmptyState()
+                  ? const _EmptyState()
                   : filtered.isEmpty
                       ? Center(
                           child: Text(
                             'No ideas match "$_searchQuery"',
                             style: TextStyle(
-                              color: Colors.white.withOpacity(0.35),
-                              fontSize: 15,
-                            ),
+                                color: Colors.white.withOpacity(0.3),
+                                fontSize: 15),
                           ),
                         )
                       : ListView.builder(
@@ -266,11 +249,11 @@ class _IdeaCardState extends State<_IdeaCard>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 300 + widget.index * 50),
+      duration: Duration(milliseconds: 280 + widget.index * 40),
     );
     _fadeAnim = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
     _slideAnim = Tween<Offset>(
-      begin: const Offset(0, 0.15),
+      begin: const Offset(0, 0.12),
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
     _controller.forward();
@@ -291,35 +274,31 @@ class _IdeaCardState extends State<_IdeaCard>
         child: Container(
           margin: const EdgeInsets.only(bottom: 12),
           decoration: BoxDecoration(
-            color: const Color(0xFF141C18),
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(
-              color: Colors.white.withOpacity(0.06),
-              width: 1,
-            ),
+            color: const Color(0xFF111111),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.white.withOpacity(0.06)),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(18),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Number badge
                 Container(
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF4ADE80).withOpacity(0.1),
+                    color: const Color(0xFFF59E0B).withOpacity(0.1),
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                      color: const Color(0xFF4ADE80).withOpacity(0.2),
-                      width: 1,
-                    ),
+                        color: const Color(0xFFF59E0B).withOpacity(0.2)),
                   ),
                   child: Center(
                     child: Text(
                       '${widget.index + 1}',
                       style: const TextStyle(
-                        color: Color(0xFF4ADE80),
-                        fontWeight: FontWeight.w700,
+                        color: Color(0xFFF59E0B),
+                        fontWeight: FontWeight.w800,
                         fontSize: 14,
                       ),
                     ),
@@ -333,26 +312,25 @@ class _IdeaCardState extends State<_IdeaCard>
                       widget.idea,
                       style: TextStyle(
                         fontSize: 15,
-                        color: Colors.white.withOpacity(0.85),
+                        color: Colors.white.withOpacity(0.82),
                         height: 1.5,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 10),
                 Column(
                   children: [
                     _SmallIconBtn(
                       icon: Icons.copy_rounded,
                       onTap: widget.onCopy,
-                      tooltip: 'Copy',
+                      isDestructive: false,
                     ),
                     const SizedBox(height: 6),
                     _SmallIconBtn(
                       icon: Icons.delete_outline_rounded,
                       onTap: widget.onDelete,
-                      tooltip: 'Remove',
                       isDestructive: true,
                     ),
                   ],
@@ -369,14 +347,12 @@ class _IdeaCardState extends State<_IdeaCard>
 class _SmallIconBtn extends StatefulWidget {
   final IconData icon;
   final VoidCallback onTap;
-  final String tooltip;
   final bool isDestructive;
 
   const _SmallIconBtn({
     required this.icon,
     required this.onTap,
-    required this.tooltip,
-    this.isDestructive = false,
+    required this.isDestructive,
   });
 
   @override
@@ -389,8 +365,8 @@ class _SmallIconBtnState extends State<_SmallIconBtn> {
   @override
   Widget build(BuildContext context) {
     final color = widget.isDestructive
-        ? const Color(0xFFFF6B6B)
-        : Colors.white.withOpacity(0.45);
+        ? const Color(0xFFEF4444)
+        : Colors.white.withOpacity(0.4);
 
     return GestureDetector(
       onTapDown: (_) => setState(() => _pressed = true),
@@ -416,6 +392,8 @@ class _SmallIconBtnState extends State<_SmallIconBtn> {
 }
 
 class _EmptyState extends StatelessWidget {
+  const _EmptyState();
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -425,29 +403,23 @@ class _EmptyState extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 72,
-              height: 72,
+              width: 76,
+              height: 76,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.04),
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: Colors.white.withOpacity(0.06),
-                  width: 1,
-                ),
+                color: const Color(0xFF111111),
+                borderRadius: BorderRadius.circular(22),
+                border: Border.all(color: Colors.white.withOpacity(0.07)),
               ),
-              child: Icon(
-                Icons.collections_bookmark_outlined,
-                color: Colors.white.withOpacity(0.2),
-                size: 32,
-              ),
+              child: Icon(Icons.collections_bookmark_outlined,
+                  color: Colors.white.withOpacity(0.15), size: 32),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 22),
             Text(
-              'No saved ideas yet',
+              'Nothing saved yet',
               style: TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Colors.white.withOpacity(0.5),
+                fontWeight: FontWeight.w700,
+                color: Colors.white.withOpacity(0.45),
               ),
             ),
             const SizedBox(height: 8),
@@ -456,7 +428,7 @@ class _EmptyState extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
-                color: Colors.white.withOpacity(0.25),
+                color: Colors.white.withOpacity(0.2),
                 height: 1.6,
               ),
             ),

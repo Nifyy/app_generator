@@ -51,23 +51,18 @@ class _HomeScreenState extends State<HomeScreen>
     HapticFeedback.lightImpact();
     setState(() => _isAnimating = true);
     _fadeController.reset();
-
     await Future.delayed(const Duration(milliseconds: 100));
-
     setState(() {
       currentIdea = ideas[Random().nextInt(ideas.length)];
       _isAnimating = false;
     });
-
     _fadeController.forward();
   }
 
   void saveIdea() {
     if (currentIdea.isNotEmpty && !savedIdeas.contains(currentIdea)) {
       HapticFeedback.mediumImpact();
-      setState(() {
-        savedIdeas.add(currentIdea);
-      });
+      setState(() => savedIdeas.add(currentIdea));
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Row(
@@ -75,35 +70,25 @@ class _HomeScreenState extends State<HomeScreen>
               Container(
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF4ADE80).withOpacity(0.2),
+                  color: const Color(0xFFF59E0B).withOpacity(0.2),
                   borderRadius: BorderRadius.circular(6),
                 ),
-                child: const Icon(
-                  Icons.check_rounded,
-                  color: Color(0xFF4ADE80),
-                  size: 16,
-                ),
+                child: const Icon(Icons.check_rounded,
+                    color: Color(0xFFF59E0B), size: 16),
               ),
               const SizedBox(width: 12),
-              const Text(
-                'Idea saved successfully',
-                style: TextStyle(
-                  fontFamily: 'serif',
-                  fontSize: 14,
-                  color: Colors.white,
-                  letterSpacing: 0.2,
-                ),
-              ),
+              const Text('Idea saved to collection',
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500)),
             ],
           ),
-          backgroundColor: const Color(0xFF1C2420),
+          backgroundColor: const Color(0xFF1A1A1A),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-            side: BorderSide(
-              color: Colors.white.withOpacity(0.08),
-              width: 1,
-            ),
+            borderRadius: BorderRadius.circular(14),
+            side: BorderSide(color: Colors.white.withOpacity(0.08)),
           ),
           margin: const EdgeInsets.all(16),
           duration: const Duration(seconds: 2),
@@ -112,15 +97,12 @@ class _HomeScreenState extends State<HomeScreen>
     } else if (savedIdeas.contains(currentIdea)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text(
-            'Already in your collection',
-            style: TextStyle(fontSize: 14, color: Colors.white70),
-          ),
-          backgroundColor: const Color(0xFF1C2420),
+          content: const Text('Already in your collection',
+              style: TextStyle(fontSize: 14, color: Colors.white60)),
+          backgroundColor: const Color(0xFF1A1A1A),
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
           margin: const EdgeInsets.all(16),
           duration: const Duration(seconds: 2),
         ),
@@ -131,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F1512),
+      backgroundColor: const Color(0xFF0A0A0A),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -141,28 +123,57 @@ class _HomeScreenState extends State<HomeScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const TopSection(),
-                const SizedBox(height: 32),
+                const SizedBox(height: 36),
 
-                const Text(
-                  'IDEA GENERATOR',
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF4ADE80),
-                    letterSpacing: 3.0,
-                  ),
+                Row(
+                  children: [
+                    Container(
+                      width: 3,
+                      height: 18,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF59E0B),
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      'GENERATOR',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white.withOpacity(0.4),
+                        letterSpacing: 3.0,
+                      ),
+                    ),
+                  ],
                 ),
 
-                const SizedBox(height: 8),
+                const SizedBox(height: 12),
 
-                const Text(
-                  'Spark your next\nBig Project',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                    height: 1.15,
-                    letterSpacing: -0.5,
+                RichText(
+                  text: const TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Spark Your\n',
+                        style: TextStyle(
+                          fontSize: 36,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.white,
+                          height: 1.1,
+                          letterSpacing: -1.0,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Next Big Idea',
+                        style: TextStyle(
+                          fontSize: 36,
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xFFF59E0B),
+                          height: 1.1,
+                          letterSpacing: -1.0,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
 
@@ -171,139 +182,54 @@ class _HomeScreenState extends State<HomeScreen>
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   width: double.infinity,
-                  constraints: const BoxConstraints(minHeight: 140),
-                  padding: const EdgeInsets.all(24),
+                  constraints: const BoxConstraints(minHeight: 150),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF1A2820),
-                    borderRadius: BorderRadius.circular(20),
+                    color: const Color(0xFF111111),
+                    borderRadius: BorderRadius.circular(24),
                     border: Border.all(
                       color: currentIdea.isNotEmpty
-                          ? const Color(0xFF4ADE80).withOpacity(0.25)
-                          : Colors.white.withOpacity(0.07),
+                          ? const Color(0xFFF59E0B).withOpacity(0.3)
+                          : Colors.white.withOpacity(0.06),
                       width: 1,
                     ),
                     boxShadow: currentIdea.isNotEmpty
                         ? [
                             BoxShadow(
-                              color: const Color(0xFF4ADE80).withOpacity(0.06),
+                              color: const Color(0xFFF59E0B).withOpacity(0.05),
                               blurRadius: 30,
-                              spreadRadius: 0,
-                            ),
+                            )
                           ]
                         : [],
                   ),
                   child: currentIdea.isEmpty
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.05),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Icon(
-                                Icons.tips_and_updates_outlined,
-                                color: Colors.white.withOpacity(0.3),
-                                size: 22,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              'Your idea appears here',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white.withOpacity(0.35),
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'Tap Generate to get started',
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.white.withOpacity(0.2),
-                              ),
-                            ),
-                          ],
-                        )
+                      ? _EmptyIdeaCard()
                       : FadeTransition(
                           opacity: _fadeAnimation,
                           child: SlideTransition(
                             position: _slideAnimation,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 6,
-                                      height: 6,
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xFF4ADE80),
-                                        shape: BoxShape.circle,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      'NEW IDEA',
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w700,
-                                        color: const Color(0xFF4ADE80)
-                                            .withOpacity(0.8),
-                                        letterSpacing: 2.0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 14),
-                                Text(
-                                  currentIdea,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
-                                    height: 1.45,
-                                    letterSpacing: -0.2,
-                                  ),
-                                ),
-                              ],
-                            ),
+                            child: _FilledIdeaCard(idea: currentIdea),
                           ),
                         ),
                 ),
 
                 const SizedBox(height: 16),
 
-                _PrimaryButton(
-                  onTap: generateIdea,
-                  isLoading: _isAnimating,
-                  label: 'Generate Idea',
-                  icon: Icons.auto_awesome_rounded,
-                ),
+                _GenerateButton(onTap: generateIdea, isLoading: _isAnimating),
 
-                const SizedBox(height: 10),
+                const SizedBox(height: 12),
 
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 250),
                   child: currentIdea.isNotEmpty
-                      ? _SecondaryButton(
+                      ? _SaveButton(
                           key: const ValueKey('save'),
                           onTap: saveIdea,
-                          label: savedIdeas.contains(currentIdea)
-                              ? 'Saved'
-                              : 'Save This Idea',
-                          icon: savedIdeas.contains(currentIdea)
-                              ? Icons.bookmark_rounded
-                              : Icons.bookmark_border_rounded,
                           isSaved: savedIdeas.contains(currentIdea),
                         )
                       : const SizedBox(key: ValueKey('empty'), height: 0),
                 ),
 
-                const SizedBox(height: 10),
+                const SizedBox(height: 12),
 
                 _CollectionButton(
                   onTap: () {
@@ -342,24 +268,123 @@ class _HomeScreenState extends State<HomeScreen>
   }
 }
 
-class _PrimaryButton extends StatefulWidget {
-  final VoidCallback onTap;
-  final String label;
-  final IconData icon;
-  final bool isLoading;
-
-  const _PrimaryButton({
-    required this.onTap,
-    required this.label,
-    required this.icon,
-    this.isLoading = false,
-  });
-
+class _EmptyIdeaCard extends StatelessWidget {
   @override
-  State<_PrimaryButton> createState() => _PrimaryButtonState();
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(28),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: List.generate(
+              3,
+              (i) => Container(
+                margin: EdgeInsets.only(right: i < 2 ? 6 : 0),
+                width: i == 0 ? 40 : (i == 1 ? 60 : 30),
+                height: 6,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.07),
+                  borderRadius: BorderRadius.circular(3),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          Container(
+            width: double.infinity,
+            height: 6,
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.05),
+              borderRadius: BorderRadius.circular(3),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            width: 200,
+            height: 6,
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.05),
+              borderRadius: BorderRadius.circular(3),
+            ),
+          ),
+          const SizedBox(height: 24),
+          Row(
+            children: [
+              Icon(Icons.bolt_rounded,
+                  color: Colors.white.withOpacity(0.15), size: 18),
+              const SizedBox(width: 8),
+              Text(
+                'Hit Generate to get started',
+                style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.white.withOpacity(0.2),
+                    fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }
 
-class _PrimaryButtonState extends State<_PrimaryButton> {
+class _FilledIdeaCard extends StatelessWidget {
+  final String idea;
+  const _FilledIdeaCard({required this.idea});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(28),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF59E0B).withOpacity(0.12),
+              borderRadius: BorderRadius.circular(6),
+              border: Border.all(
+                  color: const Color(0xFFF59E0B).withOpacity(0.25)),
+            ),
+            child: const Text(
+              'NEW IDEA',
+              style: TextStyle(
+                fontSize: 9,
+                fontWeight: FontWeight.w800,
+                color: Color(0xFFF59E0B),
+                letterSpacing: 2.5,
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            idea,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+              height: 1.4,
+              letterSpacing: -0.3,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _GenerateButton extends StatefulWidget {
+  final VoidCallback onTap;
+  final bool isLoading;
+  const _GenerateButton({required this.onTap, this.isLoading = false});
+
+  @override
+  State<_GenerateButton> createState() => _GenerateButtonState();
+}
+
+class _GenerateButtonState extends State<_GenerateButton> {
   bool _pressed = false;
 
   @override
@@ -376,22 +401,16 @@ class _PrimaryButtonState extends State<_PrimaryButton> {
         transform: Matrix4.identity()..scale(_pressed ? 0.97 : 1.0),
         transformAlignment: Alignment.center,
         width: double.infinity,
-        height: 58,
+        height: 60,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: _pressed
-                ? [const Color(0xFF2E7D52), const Color(0xFF22633F)]
-                : [const Color(0xFF36A867), const Color(0xFF2A8A52)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(16),
+          color: _pressed ? const Color(0xFFD97706) : const Color(0xFFF59E0B),
+          borderRadius: BorderRadius.circular(18),
           boxShadow: _pressed
               ? []
               : [
                   BoxShadow(
-                    color: const Color(0xFF36A867).withOpacity(0.35),
-                    blurRadius: 20,
+                    color: const Color(0xFFF59E0B).withOpacity(0.3),
+                    blurRadius: 24,
                     offset: const Offset(0, 8),
                   ),
                 ],
@@ -399,18 +418,15 @@ class _PrimaryButtonState extends State<_PrimaryButton> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              widget.icon,
-              color: Colors.white,
-              size: 20,
-            ),
+            const Icon(Icons.auto_awesome_rounded,
+                color: Color(0xFF0A0A0A), size: 20),
             const SizedBox(width: 10),
-            Text(
-              widget.label,
-              style: const TextStyle(
-                color: Colors.white,
+            const Text(
+              'Generate Idea',
+              style: TextStyle(
+                color: Color(0xFF0A0A0A),
                 fontSize: 16,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w800,
                 letterSpacing: 0.2,
               ),
             ),
@@ -421,25 +437,16 @@ class _PrimaryButtonState extends State<_PrimaryButton> {
   }
 }
 
-class _SecondaryButton extends StatefulWidget {
+class _SaveButton extends StatefulWidget {
   final VoidCallback onTap;
-  final String label;
-  final IconData icon;
   final bool isSaved;
-
-  const _SecondaryButton({
-    super.key,
-    required this.onTap,
-    required this.label,
-    required this.icon,
-    required this.isSaved,
-  });
+  const _SaveButton({super.key, required this.onTap, required this.isSaved});
 
   @override
-  State<_SecondaryButton> createState() => _SecondaryButtonState();
+  State<_SaveButton> createState() => _SaveButtonState();
 }
 
-class _SecondaryButtonState extends State<_SecondaryButton> {
+class _SaveButtonState extends State<_SaveButton> {
   bool _pressed = false;
 
   @override
@@ -456,39 +463,39 @@ class _SecondaryButtonState extends State<_SecondaryButton> {
         transform: Matrix4.identity()..scale(_pressed ? 0.97 : 1.0),
         transformAlignment: Alignment.center,
         width: double.infinity,
-        height: 52,
+        height: 54,
         decoration: BoxDecoration(
           color: widget.isSaved
-              ? const Color(0xFF1A2820)
-              : const Color(0xFF1E2B24),
-          borderRadius: BorderRadius.circular(16),
+              ? const Color(0xFFF59E0B).withOpacity(0.08)
+              : const Color(0xFF161616),
+          borderRadius: BorderRadius.circular(18),
           border: Border.all(
             color: widget.isSaved
-                ? const Color(0xFF4ADE80).withOpacity(0.4)
-                : Colors.white.withOpacity(0.1),
-            width: 1,
+                ? const Color(0xFFF59E0B).withOpacity(0.35)
+                : Colors.white.withOpacity(0.08),
           ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              widget.icon,
+              widget.isSaved
+                  ? Icons.bookmark_rounded
+                  : Icons.bookmark_border_rounded,
               color: widget.isSaved
-                  ? const Color(0xFF4ADE80)
-                  : Colors.white.withOpacity(0.7),
+                  ? const Color(0xFFF59E0B)
+                  : Colors.white.withOpacity(0.5),
               size: 18,
             ),
             const SizedBox(width: 8),
             Text(
-              widget.label,
+              widget.isSaved ? 'Saved' : 'Save This Idea',
               style: TextStyle(
                 color: widget.isSaved
-                    ? const Color(0xFF4ADE80)
-                    : Colors.white.withOpacity(0.7),
+                    ? const Color(0xFFF59E0B)
+                    : Colors.white.withOpacity(0.5),
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
-                letterSpacing: 0.1,
               ),
             ),
           ],
@@ -501,7 +508,6 @@ class _SecondaryButtonState extends State<_SecondaryButton> {
 class _CollectionButton extends StatefulWidget {
   final VoidCallback onTap;
   final int count;
-
   const _CollectionButton({required this.onTap, required this.count});
 
   @override
@@ -525,79 +531,65 @@ class _CollectionButtonState extends State<_CollectionButton> {
         transform: Matrix4.identity()..scale(_pressed ? 0.97 : 1.0),
         transformAlignment: Alignment.center,
         width: double.infinity,
-        height: 58,
+        height: 60,
         decoration: BoxDecoration(
-          color: const Color(0xFF161E1A),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: Colors.white.withOpacity(0.06),
-            width: 1,
-          ),
+          color: const Color(0xFF111111),
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: Colors.white.withOpacity(0.06)),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(8),
+                width: 38,
+                height: 38,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.06),
+                  color: Colors.white.withOpacity(0.05),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(
-                  Icons.collections_bookmark_outlined,
-                  color: Colors.white.withOpacity(0.6),
-                  size: 18,
-                ),
+                child: Icon(Icons.collections_bookmark_outlined,
+                    color: Colors.white.withOpacity(0.5), size: 18),
               ),
               const SizedBox(width: 14),
-              Text(
-                'My Collection',
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.75),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.1,
-                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('My Collection',
+                      style: TextStyle(
+                          color: Colors.white.withOpacity(0.8),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700)),
+                  Text(
+                    widget.count > 0
+                        ? '${widget.count} idea${widget.count == 1 ? '' : 's'} saved'
+                        : 'No ideas saved yet',
+                    style: TextStyle(
+                        color: Colors.white.withOpacity(0.25),
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ],
               ),
               const Spacer(),
               if (widget.count > 0)
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 4,
-                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF4ADE80).withOpacity(0.15),
+                    color: const Color(0xFFF59E0B),
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: const Color(0xFF4ADE80).withOpacity(0.3),
-                      width: 1,
-                    ),
                   ),
-                  child: Text(
-                    '${widget.count}',
-                    style: const TextStyle(
-                      color: Color(0xFF4ADE80),
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                )
-              else
-                Text(
-                  'Empty',
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.25),
-                    fontSize: 13,
-                  ),
+                  child: Text('${widget.count}',
+                      style: const TextStyle(
+                          color: Color(0xFF0A0A0A),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w800)),
                 ),
-              const SizedBox(width: 4),
-              Icon(
-                Icons.chevron_right_rounded,
-                color: Colors.white.withOpacity(0.3),
-                size: 20,
-              ),
+              const SizedBox(width: 8),
+              Icon(Icons.arrow_forward_ios_rounded,
+                  color: Colors.white.withOpacity(0.2), size: 14),
             ],
           ),
         ),

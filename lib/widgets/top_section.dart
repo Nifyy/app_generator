@@ -17,7 +17,7 @@ class _TopSectionState extends State<TopSection>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 8),
+      duration: const Duration(seconds: 12),
     )..repeat();
   }
 
@@ -30,40 +30,34 @@ class _TopSectionState extends State<TopSection>
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 160,
+      height: 180,
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF1A3028),
-            Color(0xFF0F1F18),
-          ],
-        ),
+        borderRadius: BorderRadius.circular(28),
+        color: const Color(0xFF111111),
         border: Border.all(
-          color: const Color(0xFF4ADE80).withOpacity(0.12),
+          color: const Color(0xFFF59E0B).withOpacity(0.18),
           width: 1,
         ),
       ),
       clipBehavior: Clip.hardEdge,
       child: Stack(
         children: [
+          // Animated glow orb
           AnimatedBuilder(
             animation: _controller,
             builder: (context, child) {
               return Positioned(
-                left: -40 + 30 * math.sin(_controller.value * 2 * math.pi),
-                top: -40 + 20 * math.cos(_controller.value * 2 * math.pi),
+                right: -20 + 25 * math.sin(_controller.value * 2 * math.pi),
+                top: -30 + 15 * math.cos(_controller.value * 2 * math.pi),
                 child: Container(
-                  width: 180,
-                  height: 180,
+                  width: 200,
+                  height: 200,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        const Color(0xFF4ADE80).withOpacity(0.12),
+                        const Color(0xFFF59E0B).withOpacity(0.15),
                         Colors.transparent,
                       ],
                     ),
@@ -73,40 +67,27 @@ class _TopSectionState extends State<TopSection>
             },
           ),
 
-          Positioned(
-            right: -20,
-            bottom: -30,
-            child: Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: const Color(0xFF4ADE80).withOpacity(0.08),
-                  width: 1,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            right: 20,
-            bottom: -50,
-            child: Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.white.withOpacity(0.04),
-                  width: 1,
-                ),
-              ),
+          // Diagonal stripe pattern
+          Positioned.fill(
+            child: CustomPaint(
+              painter: _DiagonalStripePainter(),
             ),
           ),
 
-          Positioned.fill(
-            child: CustomPaint(
-              painter: _DotGridPainter(),
+          // Bottom left geometric accent
+          Positioned(
+            left: -15,
+            bottom: -15,
+            child: Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: const Color(0xFFF59E0B).withOpacity(0.12),
+                  width: 1,
+                ),
+              ),
             ),
           ),
 
@@ -116,56 +97,86 @@ class _TopSectionState extends State<TopSection>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF4ADE80).withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: const Color(0xFF4ADE80).withOpacity(0.25),
-                          width: 1,
-                        ),
+                        color: const Color(0xFFF59E0B),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Icon(
-                        Icons.lightbulb_outline_rounded,
-                        color: Color(0xFF4ADE80),
-                        size: 18,
+                      child: const Text(
+                        'IDEA',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w900,
+                          color: Color(0xFF0A0A0A),
+                          letterSpacing: 1.5,
+                        ),
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Idea DEPT.',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white,
-                            letterSpacing: -0.3,
-                          ),
-                        ),
-                        Text(
-                          'Idea Generator',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white.withOpacity(0.4),
-                            letterSpacing: 0.5,
-                          ),
-                        ),
-                      ],
+                    const SizedBox(width: 10),
+                    Text(
+                      'DEPT.',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white.withOpacity(0.9),
+                        letterSpacing: -0.3,
+                      ),
                     ),
                   ],
                 ),
                 const Spacer(),
-                Text(
-                  '1000 curated app ideas\nat your fingertips',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.white.withOpacity(0.4),
-                    height: 1.5,
-                  ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Your next big\nthing starts here',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white.withOpacity(0.35),
+                          height: 1.5,
+                          letterSpacing: 0.1,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.05),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.08),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 6,
+                            height: 6,
+                            decoration: const BoxDecoration(
+                              color: Color(0xFFF59E0B),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            'AI Powered',
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: Colors.white.withOpacity(0.5),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -176,21 +187,24 @@ class _TopSectionState extends State<TopSection>
   }
 }
 
-class _DotGridPainter extends CustomPainter {
+class _DiagonalStripePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.04)
-      ..style = PaintingStyle.fill;
+      ..color = Colors.white.withOpacity(0.025)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1;
 
-    const spacing = 24.0;
-    for (double x = spacing; x < size.width; x += spacing) {
-      for (double y = spacing; y < size.height; y += spacing) {
-        canvas.drawCircle(Offset(x, y), 1.5, paint);
-      }
+    const spacing = 28.0;
+    for (double i = -size.height; i < size.width + size.height; i += spacing) {
+      canvas.drawLine(
+        Offset(i, 0),
+        Offset(i + size.height, size.height),
+        paint,
+      );
     }
   }
 
   @override
-  bool shouldRepaint(_DotGridPainter oldDelegate) => false;
+  bool shouldRepaint(_DiagonalStripePainter oldDelegate) => false;
 }
